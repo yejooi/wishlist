@@ -1,7 +1,14 @@
 package com.example.wishlist;
 
+import jakarta.persistence.*; // jpa 어노테이션 모음
+
+@Entity // 이 클래스를 디비 테이블과 연결 (WishItem → wish_item 테이블)
 public class WishItem {
+
+    @Id // 이 필드가 기본키
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // id를 디비가 자동 증가로 부여
     private Long id; // item number
+
     private String name; // eg) labtop
     private String category;
     private int price;
