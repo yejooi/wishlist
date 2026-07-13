@@ -5,6 +5,7 @@ import java.util.List;
 
 @RestController // web 요청을 처리하고, 반환값을 JSON으로 응답하는 annotation
 @RequestMapping("/wishes") // 이 컨트롤러의 모든 주소는 /wishes 로 시작
+@CrossOrigin(origins = "http://localhost:5173")
 public class WishController {
 
     private final WishRepository repository; // 디비 접근 담당

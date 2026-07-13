@@ -12,6 +12,10 @@ public class WishItem {
     private String name; // eg) labtop
     private String category;
     private int price;
+    private String link;
+    private String imgUrl;
+    private String status;
+    private int rating;
 
     public WishItem() {} // 기본 생성자 (빈 객체를 만들 때 호출되는 메서드, JSON->객체 변환)
 
@@ -24,4 +28,12 @@ public class WishItem {
     public void setCategory(String category) { this.category = category; }
     public int getPrice() { return price; }
     public void setPrice(int price) { this.price = price; }
+    public String getLink() { return link; }
+    public void setLink(String link) { this.link = link; }
+    public String getImgUrl() { return imgUrl; }
+    public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+    public int getRating() { return rating; }
+    public void setRating(int rating) {this.rating = rating; }
 }
