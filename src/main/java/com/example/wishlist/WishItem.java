@@ -14,7 +14,7 @@ public class WishItem {
     private int price;
     private String link;
     private String imgUrl;
-    private String status;
+    private String status = "wishing";
     private int rating;
 
     public WishItem() {} // 기본 생성자 (빈 객체를 만들 때 호출되는 메서드, JSON->객체 변환)

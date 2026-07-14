@@ -50,4 +50,14 @@ public class WishController {
     public void delete(@PathVariable Long id) {
         repository.deleteById(id); //id로 삭제
     }
+
+    // [상태 토글] PUT /wishes/{id}/toggle -> 위시중 <-> 구매완료 전환
+    @PutMapping("/{id}/toggle")
+    public WishItem toggleStatus(@PathVariable Long id) {
+        WishItem item = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("없는 위시 id: " + id));
+        // purchased면 wishing으로, 아니면 purchased로
+        item.setStatus("purchased".equals(item.getStatus()) ? "wishing" : "purchased");
+        return repository.save(item);
+    }
 }
