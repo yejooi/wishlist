@@ -21,6 +21,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // jpa (db를 자바 객체로 다루기)
 	implementation 'org.jsoup:jsoup:1.17.2' // HTML 파싱 (open graph 태크 추출용)
+	implementation 'org.springframework.security:spring-security-crypto' // BCrypt 비번 해시
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 보안 프레임워크
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6' // JWT
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 	runtimeOnly 'com.h2database:h2' // h2 (가벼운 개발용 db)
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

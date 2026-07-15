@@ -1,6 +1,7 @@
 package com.example.wishlist;
 
 import jakarta.persistence.*; // jpa 어노테이션 모음
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity // 이 클래스를 디비 테이블과 연결 (WishItem → wish_item 테이블)
 public class WishItem {
@@ -16,6 +17,10 @@ public class WishItem {
     private String imgUrl;
     private String status = "wishing";
     private int rating;
+
+    @ManyToOne // 여러 위시 -> 한 명의 주인
+    @JsonIgnore // JSON 응답에 user 정보는 빼기 (비번 노출 방지)
+    private User owner;
 
     public WishItem() {} // 기본 생성자 (빈 객체를 만들 때 호출되는 메서드, JSON->객체 변환)
 
@@ -36,4 +41,6 @@ public class WishItem {
     public void setStatus(String status) { this.status = status; }
     public int getRating() { return rating; }
     public void setRating(int rating) {this.rating = rating; }
+    public User getOwner() { return owner; }
+    public void setOwner(User owner) { this.owner = owner; }
 }
