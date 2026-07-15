@@ -3,6 +3,12 @@ package com.example.wishlist;
 import org.springframework.web.bind.annotation.*; // web 관련 annotation(@~) 모음
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController // web 요청을 처리하고, 반환값을 JSON으로 응답하는 annotation
 @RequestMapping("/wishes") // 이 컨트롤러의 모든 주소는 /wishes 로 시작
 @CrossOrigin(origins = "http://localhost:5173")
@@ -59,5 +65,38 @@ public class WishController {
         // purchased면 wishing으로, 아니면 purchased로
         item.setStatus("purchased".equals(item.getStatus()) ? "wishing" : "purchased");
         return repository.save(item);
+    }
+
+    // [자동 채우기] GET /wishes/preview?url=... → 그 페이지의 제목·이미지·가격을 뽑아서 반환
+    @GetMapping("/preview")
+    public Map<String, String> preview(@RequestParam String url) { // @RequestParam: ?url=... 값을 받음
+        Map<String, String> result = new HashMap<>();
+        try {
+            // url 의 HTML 을 받아옴
+            Document doc = Jsoup.connect(url)
+                    .userAgent("Mozilla/5.0") // (userAgent=브라우저인 척, 일부 사이트 봇 차단 회피)
+                    .timeout(5000)
+                    .get();
+
+            String title = meta(doc, "og:title");
+            if (title == null) title = doc.title();
+            String image = meta(doc, "og:image");
+            String price = meta(doc, "product:price:amount");
+            if (price == null) price = meta(doc, "og:price:amount");
+
+            result.put("name", title != null ? title : "");
+            result.put("imgUrl", image != null ? image : "");
+            result.put("price", price != null ? price : "");
+        } catch (Exception e) {
+            // 실패하면 빈 값 반환 (프론트에서 직접 입력 처리)
+        }
+        return result;
+    }
+
+    // <meta property="og:title" content="..."> 에서 content를 뽑는 헬퍼
+    private String meta(Document doc, String property) {
+        Element el = doc.selectFirst("meta[property='" + property + "']");
+        if (el == null) el = doc.selectFirst("meta[name='" + property + "']"); // name= 형태도 시도
+        return el != null ? el.attr("content") : null;
     }
 }
