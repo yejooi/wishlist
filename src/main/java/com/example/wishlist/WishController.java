@@ -113,4 +113,13 @@ public class WishController {
         if (el == null) el = doc.selectFirst("meta[name='" + property + "']"); // name= 형태도 시도
         return el != null ? el.attr("content") : null;
     }
+
+    // [남의 위시 보기] GET /wishes/user/{username} -> 그 사람의 위시 목록
+    @GetMapping("/user/{username}")
+    public List<WishItem> getUSerWishes(@PathVariable String username, Authentication auth) {
+        // auth 는 로그인 확인용 - 로그인한 사람만 남의 것도 볼 수 있게
+        User target = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 사용자"));
+        return repository.findByOwner(target);
+    }
 }
