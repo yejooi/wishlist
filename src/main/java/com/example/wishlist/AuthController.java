@@ -60,7 +60,7 @@ public class AuthController {
         if (!encoder.matches(req.password(), user.getPassword())) { // 입력된 비번을 같은 방식으로 해시해서 저장된 해시와 비교
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 틀렸습니다");
         }
-        String token = jwtUtil.generateToken(user.getUserName()); // 토큰 발급
+        String token = jwtUtil.generateToken(user.getUsername()); // 토큰 발급
         return java.util.Map.of("token", token);
     }
 

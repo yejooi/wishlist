@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
+import java.util.Map;
 
 @RestController // 요청 처리 + 반환값을 JSON 으로
 @RequestMapping("/users") // 이 컨트롤러의 모든 주소는 /users 로 시작
@@ -35,7 +36,7 @@ public class UserController {
         return userRepository.findAll().stream() // 모든 사용자를 하나씩 처리
                 .filter(u -> !u.getId().equals(me.getId())) // 나 자신은 목록에서 제외
                 .map(u -> new UserView(
-                        u.getUserName(),
+                        u.getUsername(),
                         followRepository.existsByFollowerAndFollowing(me, u) // 내가 u를 팔로우 중?
                 ))
                 .toList(); // 결과를 리스트로 모음
@@ -69,5 +70,34 @@ public class UserController {
         User target = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 사용자"));
         followRepository.deleteByFollowerAndFollowing(me, target); // 그 관계행 삭제
+    }
+
+    // [내 프로필] GET /users/me/profile
+    @GetMapping("/me/profile")
+    public ProfileView myProfile(Authentication auth) {
+        User me = me(auth);
+        long following = followRepository.countByFollower(me);
+        long followers = followRepository.countByFollowing(me);
+        return new ProfileView(me.getUsername(), me.getProfileImg(), following, followers, false);
+    }
+
+    // [남의 프로필] GET /users/{username}/profile
+    @GetMapping("/{username}/profile")
+    public ProfileView userProfile(@PathVariable String username, Authentication auth) {
+        User me = me(auth);
+        User target = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 사용자"));
+        long following = followRepository.countByFollower(target);
+        long followers = followRepository.countByFollowing(target);
+        boolean iFollow = followRepository.existsByFollowerAndFollowing(me, target);
+        return new ProfileView(target.getUsername(), target.getProfileImg(), following, followers, iFollow);
+    }
+
+    // [내 프로필 사진 변경] PUT /users/me/profile-image Body: { "imgUrl": "..." }
+    @PutMapping("/me/profile-image")
+    public void updateProfileImage(@RequestBody Map<String, String> body, Authentication auth) {
+        User me = me(auth);
+        me.setProfileImg(body.get("imgUrl"));
+        userRepository.save(me);
     }
 }
