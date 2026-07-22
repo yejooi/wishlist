@@ -2,6 +2,7 @@ package com.example.wishlist;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -18,9 +19,12 @@ isValid(token) → 진짜/가짜 판별
 */
 public class JwtUtil {
     // 토큰 서명용 비밀키
-    private final SecretKey key = Keys.hmacShaKeyFor(
-            "mywishlist-youcanwisheverythingyouwannaget-justbuyit!".getBytes());
+    private final SecretKey key;
     private final long EXP = 1000L * 60 * 60 * 24; // 24시간 유효
+
+    public JwtUtil(@Value("${jwt.secret}") String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
     // 토큰 발급: username 을 담아 서명
     public String generateToken(String username) {
