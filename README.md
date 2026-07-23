@@ -13,13 +13,15 @@
 | 프론트엔드 저장소 | [https://github.com/yejooi/wishlist-front](https://github.com/yejooi/wishlist-front) |
 | 백엔드 저장소 | [https://github.com/yejooi/wishlist](https://github.com/yejooi/wishlist) |
 
-> 게스트 체험용 계정: `weno` / `weno`  ← 만들어두면 면접관이 바로 써볼 수 있어 좋습니다
+> 게스트 체험용 계정: `weno` / `weno`
 
 ## 📸 스크린샷
 
-![][image1]![][image2]![][image3]
+![Screenshot 2026-07-23 at 6.59.35 PM.png](../../../../var/folders/gj/l1vbrkm102l28szv6x5cr3ph0000gn/T/TemporaryItems/NSIRD_screencaptureui_41rJ0u/Screenshot%202026-07-23%20at%206.59.35%E2%80%AFPM.png)
 
-## ![][image4]![][image5]
+![Screenshot 2026-07-23 at 7.00.22 PM.png](../../../../var/folders/gj/l1vbrkm102l28szv6x5cr3ph0000gn/T/TemporaryItems/NSIRD_screencaptureui_xjOdHG/Screenshot%202026-07-23%20at%207.00.22%E2%80%AFPM.png)
+
+![Screenshot 2026-07-23 at 7.00.46 PM.png](../../../../var/folders/gj/l1vbrkm102l28szv6x5cr3ph0000gn/T/TemporaryItems/NSIRD_screencaptureui_G1zCN7/Screenshot%202026-07-23%20at%207.00.46%E2%80%AFPM.png)
 
 ## ✨ 주요 기능
 
