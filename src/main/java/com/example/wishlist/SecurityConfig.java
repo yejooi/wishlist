@@ -49,7 +49,8 @@ public class SecurityConfig { // 보안 규칙
     public CorsConfigurationSource corsSource() {
         CorsConfiguration c = new CorsConfiguration();
         c.setAllowedOriginPatterns(List.of("http://localhost:5173",
-                "https://wishlist-front-*.vercel.app"));
+                "https://wishlist-front-*.vercel.app",
+                "https://wisher-ju.vercel.app"));
         c.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         c.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
